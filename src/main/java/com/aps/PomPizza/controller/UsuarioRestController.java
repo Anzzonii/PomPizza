@@ -3,7 +3,7 @@ package com.aps.PomPizza.controller;
 import com.aps.PomPizza.models.AuthRequest;
 import com.aps.PomPizza.models.Usuario;
 import com.aps.PomPizza.repository.UsuarioRepository;
-import com.aps.PomPizza.service.UserInfoService;
+import com.aps.PomPizza.service.security.UserInfoService;
 import com.aps.PomPizza.service.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

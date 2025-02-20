@@ -2,11 +2,10 @@ package com.aps.PomPizza.security.config;
 
 
 import com.aps.PomPizza.security.filter.JwtAuthFilter;
-import com.aps.PomPizza.service.UserInfoService;
+import com.aps.PomPizza.service.security.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

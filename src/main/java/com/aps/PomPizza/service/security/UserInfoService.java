@@ -1,8 +1,7 @@
-package com.aps.PomPizza.service;
+package com.aps.PomPizza.service.security;
 
 import com.aps.PomPizza.models.Usuario;
 import com.aps.PomPizza.repository.UsuarioRepository;
-import com.aps.PomPizza.service.security.UserInfoDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

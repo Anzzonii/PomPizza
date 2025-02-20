@@ -1,6 +1,6 @@
 package com.aps.PomPizza.security.filter;
 
-import com.aps.PomPizza.service.UserInfoService;
+import com.aps.PomPizza.service.security.UserInfoService;
 import com.aps.PomPizza.service.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
