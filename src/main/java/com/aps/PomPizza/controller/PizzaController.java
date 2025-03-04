@@ -3,6 +3,7 @@ package com.aps.PomPizza.controller;
 import com.aps.PomPizza.models.Pizza;
 import com.aps.PomPizza.repository.PizzaRepository;
 import com.aps.PomPizza.service.PizzaService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +29,13 @@ public class PizzaController {
     }
 
     //Mostrar formulario para crear pizzas
-    @GetMapping("/crearPizza")
+    @GetMapping("/admin/crearPizza")
     public String showAddPizza(){
         return "addPizza";
     }
 
     //Mostrar formulario para editar pizzas
-    @GetMapping("/editarPizza/{id}")
+    @GetMapping("/admin/editarPizza/{id}")
     public String showEditPizza(@PathVariable String id, Model model){
         Optional<Pizza> pizza = pizzaRepository.findById(id);
         if (pizza.isEmpty()) {

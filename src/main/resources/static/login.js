@@ -20,7 +20,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     try {
 
         // Enviar la solicitud POST al backend
-        const response = await fetch("http://localhost:8080/auth/generateToken", {
+        const response = await fetch("http://localhost:8080/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -38,10 +38,13 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         // Verificar si el token está presente
         if (data) {
             // Guardar el token en localStorage
-            localStorage.setItem("jwtToken", data);
+            const tokenPayload = JSON.parse(atob(data.split(".")[1]));
+            console.log("Payload del token:", tokenPayload);
+            localStorage.setItem("token", data);
             alert("Login exitoso!");
             // Redirigir al index
             window.location.href = "/index";
+            
         } else {
             alert("Usuario o contraseña incorrectos");
         }

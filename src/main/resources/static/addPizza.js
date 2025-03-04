@@ -32,7 +32,7 @@ document.getElementById("addPizzaForm").addEventListener("submit", function(even
         ingredientes : ingredientes,
         precio : document.getElementById("precio").value,
         imageUrl : document.getElementById("imageUrl").value,
-        disponible : document.getElementsByClassName("disponible").checked
+        disponible : document.getElementById("disponible").checked
     }
 
     console.log(pizza);

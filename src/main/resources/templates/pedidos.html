@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="crearForm" th:action="@{/pedidos/crearNuevoPedido}" method="get">
+    <button type="submit">Crear pedido</button>
+</form>
+
+<h2 style="text-align: center;">Lista de pedidos</h2>
+
+<table border="2" >
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Pizzas</th>
+        <th>Precio</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th id="thAcciones"></th>
+    </tr>
+    </thead>
+    <tbody id="pedido-table">
+    <!-- Aquí se insertan las pizzas dinámicamente -->
+    </tbody>
+</table>
+
+
+<script th:src="@{/pedidos.js}"></script>
+
+</body>
+</html>

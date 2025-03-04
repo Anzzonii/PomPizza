@@ -1,12 +1,10 @@
-package com.aps.PomPizza.controller;
+package com.aps.PomPizza.controller.RestController;
 
 import com.aps.PomPizza.models.Pizza;
-import com.aps.PomPizza.models.Usuario;
 import com.aps.PomPizza.repository.PizzaRepository;
 import com.aps.PomPizza.service.PizzaService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,7 +52,9 @@ public class PizzaRestController {
     }
 
     @GetMapping()
-    public List<Pizza> allPizzas(){
-        return pizzaRepository.findAll();
+    public List<Pizza> allPizzas() {
+        List<Pizza> pizzas = pizzaRepository.findAll();
+        pizzas.forEach(pedido -> System.out.println("Pedido encontrado: " + pedido.toString()));
+        return pizzas;
     }
 }

@@ -21,6 +21,9 @@ public class Pizza {
 
     //Getters y Setters
     public String get_id() {
+        if(_id == null){
+            return "0";
+        }
         return _id.toHexString();
     }
 
@@ -74,5 +77,18 @@ public class Pizza {
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
+    }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "_id=" + _id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", ingredientes=" + ingredientes +
+                ", precio=" + precio +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", disponible=" + disponible +
+                '}';
     }
 }

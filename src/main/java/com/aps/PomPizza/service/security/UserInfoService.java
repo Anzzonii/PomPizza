@@ -32,6 +32,7 @@ public class UserInfoService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> userDetail = usuarioRepository.findByName(username); // Assuming 'email' is used as username
 
+        System.out.println(userDetail.get().getRol());
         // Converting UserInfo to UserDetails
         return userDetail.map(UserInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));

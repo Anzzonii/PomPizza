@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Pedido</title>
+</head>
+<body>
+
+  <h2>Formulario pizza nueva</h2>
+  <form id="addPedidoForm">
+
+      <table border="2" >
+          <thead>
+          <tr>
+              <th>Nombre</th>
+              <th>Ingredientes</th>
+              <th>Precio</th>
+              <th>Imagen</th>
+              <th id="thAcciones"></th>
+          </tr>
+          </thead>
+          <tbody id="pizza-table">
+          <!-- Aquí se insertan las pizzas dinámicamente -->
+          </tbody>
+      </table>
+
+        <div id="pedido-container">
+          <h3>Pedido actual</h3>
+          <ul id="pedido-list"></ul> <!-- Aquí se mostrarán las pizzas añadidas -->
+        </div>
+      <button type="submit">Guardar pedido</button>
+
+  </form>
+
+  <script th:src="@{/addPedido.js}"></script>
+
+</body>
+</html>

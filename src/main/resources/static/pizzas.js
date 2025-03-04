@@ -1,11 +1,19 @@
 
+
+
 async function cargarPizzas() {
+    const rol = obtenerRolUsuario()
+    console.log(rol)
+
     try {
         const response = await fetch('http://localhost:8080/api/pizzas'); // Llamada a la API
 
         const pizzas = await response.json(); // Convertir respuesta a JSON
+
+        const isAdmin = rol === "ROLE_ADMIN";
         
         const tablaBody = document.getElementById('pizza-table');
+
         tablaBody.innerHTML = ''; // Limpiar la tabla antes de insertar los datos
 
         pizzas.forEach(pizza => {
@@ -14,13 +22,21 @@ async function cargarPizzas() {
                 <td>${pizza.ingredientes}</td>
                 <td>${pizza.precio.toFixed(2)}€</td>
                 <td><image src="${pizza.imageUrl}" width="200"></td>
+
+                ${isAdmin ? `
                 <td>
                     <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
                     <button onClick="editarPizza('${pizza._id}')">Editar</button>
-                </td>
+                </td>`
+                : ""}
             </tr>`;
             tablaBody.innerHTML += fila;
         });
+
+        if (!isAdmin) {
+            document.getElementById("thAcciones").style.display = "none";
+            document.getElementById("crearForm").style.display = "none";
+        }
 
     } catch (error) {
         console.error('Error cargando las pizzas:', error);
@@ -58,8 +74,36 @@ function eliminarPizza(id) {
 }
 
 function editarPizza(id) {
-    window.location.href = `/pizzas/editarPizza/${id}`; // Ajusta la ruta según tu backend
+    window.location.href = `/pizzas/admin/editarPizza/${id}`; // Ajusta la ruta según tu backend
 }
 
 
 document.addEventListener('DOMContentLoaded', cargarPizzas);
+
+
+function obtenerRolUsuario() {
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            throw new Error("No hay token almacenado");
+        }
+
+        // Decodificar el payload del token
+        const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Payload del token:", tokenPayload);
+
+        // Extraer el rol del campo 'role'
+        const rol = tokenPayload.role;
+
+        if (!rol) {
+            throw new Error("El token no contiene un rol válido");
+        }
+
+        return rol;
+    } catch (error) {
+        console.error("Error obteniendo el rol:", error);
+        localStorage.removeItem("token"); // Limpiar el token inválido
+        window.location.href = "/auth/login";
+        return null;
+    }
+}

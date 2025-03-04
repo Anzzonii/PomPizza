@@ -6,6 +6,7 @@ import com.aps.PomPizza.service.security.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,35 +27,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
+    @Lazy
     private JwtAuthFilter authFilter;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserInfoService(); // Ensure UserInfoService implements UserDetailsService
-    }
+    // Inyectamos el UserInfoService ya administrado por Spring
+    @Autowired
+    @Lazy
+    private UserInfoService userInfoService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**","/auth/users","/auth/register","/auth/login", "/auth/addNewUser", "/auth/generateToken").permitAll()
-                       /* .requestMatchers("/auth/client/**").hasAuthority("CLIENTE")
-                        .requestMatchers("/auth/admin/**").hasAuthority("ADMIN")*/
-                        .anyRequest().authenticated() // Protect all other endpoints
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")  // Solo ADMIN puede acceder a /admin
+                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/**", "/auth/users", "/auth/register", "/auth/login", "/auth/addNewUser", "/auth/generateToken")
+                        .permitAll()
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/error") // Página personalizada para errores de acceso denegado
                 )
                 .sessionManagement(sess -> sess
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No sessions
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authenticationProvider(authenticationProvider()) // Custom authentication provider
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Password encoding
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -64,6 +70,12 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return userInfoService;
+    }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

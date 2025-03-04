@@ -8,7 +8,7 @@
 
 <h2>Pizzas</h2>
 
-<form th:action="@{/pizzas/crearPizza}" method="get">
+<form id="crearForm" th:action="@{/pizzas/admin/crearPizza}" method="get">
     <button type="submit">Crear pizza</button>
 </form>
 
@@ -21,11 +21,11 @@
         <th>Ingredientes</th>
         <th>Precio</th>
         <th>Imagen</th>
-        <th></th>
+        <th id="thAcciones"></th>
     </tr>
     </thead>
     <tbody id="pizza-table">
-    <!-- Aquí se insertarán las pizzas dinámicamente -->
+        <!-- Aquí se insertan las pizzas dinámicamente -->
     </tbody>
 </table>
 
