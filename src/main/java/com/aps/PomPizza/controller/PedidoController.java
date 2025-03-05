@@ -13,8 +13,9 @@ public class PedidoController {
         return "pedidos";
     }
 
-    @GetMapping("/crearNuevoPedido")
+    @GetMapping("/user/crearNuevoPedido")
     public String showAddPedido(){
         return "addPedido";
+
     }
 }

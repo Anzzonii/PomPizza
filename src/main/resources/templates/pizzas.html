@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<form th:action="@{/pedidos}" method="get">
+    <button type="submit">Pedidos</button>
+</form>
+
 <h2>Pizzas</h2>
 
 <form id="crearForm" th:action="@{/pizzas/admin/crearPizza}" method="get">

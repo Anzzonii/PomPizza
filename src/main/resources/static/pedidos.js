@@ -33,7 +33,7 @@ async function cargarPedidos() {
                     <td>
                         ${pedido.estado}
                         <br>
-                        <select id="estado-${pedido._id}" defaultValue="${pedido.estado}">
+                        <select id="estado-${pedido._id}" value="${pedido.estado}">
                             <option value="Pendiente">Pendiente</option>
                             <option value="En preparación">En preparación</option>
                             <option value="Listo">Listo</option>
@@ -46,9 +46,10 @@ async function cargarPedidos() {
                 tablaBody.innerHTML += fila;
             });
 
+            document.getElementById("crearForm").style.display = "none"
 
         }else{
-            document.getElementById("crearForm").style.display = "none"
+            
             document.getElementById("thAcciones").style.display = "none";
             
             pedidos.forEach(pedido => {

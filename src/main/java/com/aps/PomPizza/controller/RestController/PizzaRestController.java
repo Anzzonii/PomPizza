@@ -47,6 +47,7 @@ public class PizzaRestController {
         pizza.setIngredientes((List<String>) body.get("ingredientes"));
         pizza.setPrecio(Double.parseDouble(body.get("precio").toString()));
         pizza.setImageUrl(body.get("imageUrl").toString());
+        pizza.setDisponible((Boolean) body.get("disponible"));
 
         return service.editPizza(pizza);
     }

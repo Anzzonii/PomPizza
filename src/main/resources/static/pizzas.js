@@ -3,8 +3,7 @@
 
 async function cargarPizzas() {
     const rol = obtenerRolUsuario()
-    console.log(rol)
-
+    
     try {
         const response = await fetch('http://localhost:8080/api/pizzas'); // Llamada a la API
 
@@ -17,20 +16,46 @@ async function cargarPizzas() {
         tablaBody.innerHTML = ''; // Limpiar la tabla antes de insertar los datos
 
         pizzas.forEach(pizza => {
-            const fila = `<tr>
-                <td>${pizza.nombre}</td>
-                <td>${pizza.ingredientes}</td>
-                <td>${pizza.precio.toFixed(2)}€</td>
-                <td><image src="${pizza.imageUrl}" width="200"></td>
 
-                ${isAdmin ? `
-                <td>
-                    <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
-                    <button onClick="editarPizza('${pizza._id}')">Editar</button>
-                </td>`
-                : ""}
-            </tr>`;
-            tablaBody.innerHTML += fila;
+            //Si el usuario es admin la muestra independientemente si esta disponible o no
+            if(isAdmin){
+                const fila = `<tr>
+                    <td>${pizza.nombre}</td>
+                    <td>${pizza.ingredientes}</td>
+                    <td>${pizza.precio.toFixed(2)}€</td>
+                    <td><image src="${pizza.imageUrl}" width="200"></td>
+
+                    ${isAdmin ? `
+                    <td>
+                        <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
+                        <button onClick="editarPizza('${pizza._id}')">Editar</button>
+                    </td>`
+                    : ""}
+                </tr>`;
+                    
+                tablaBody.innerHTML += fila;
+
+            }else{
+                //Si la pizza esta disponible y el usuario no es admin se muestra
+                if(pizza.disponible){
+                        const fila = `<tr>
+                        <td>${pizza.nombre}</td>
+                        <td>${pizza.ingredientes}</td>
+                        <td>${pizza.precio.toFixed(2)}€</td>
+                        <td><image src="${pizza.imageUrl}" width="200"></td>
+
+                        ${isAdmin ? `
+                        <td>
+                            <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
+                            <button onClick="editarPizza('${pizza._id}')">Editar</button>
+                        </td>`
+                        : ""}
+                    </tr>`;
+                        
+                    tablaBody.innerHTML += fila;
+                }
+
+            }
         });
 
         if (!isAdmin) {
@@ -90,7 +115,6 @@ function obtenerRolUsuario() {
 
         // Decodificar el payload del token
         const tokenPayload = JSON.parse(atob(token.split(".")[1]));
-        console.log("Payload del token:", tokenPayload);
 
         // Extraer el rol del campo 'role'
         const rol = tokenPayload.role;

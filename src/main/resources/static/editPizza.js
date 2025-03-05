@@ -61,6 +61,8 @@ let ingredientes = [];
                 disponible: document.getElementById("disponible").checked
             };
 
+            console.log(pizza.disponible)
+
             console.log("Enviando:", pizza);
 
             fetch("/api/pizzas/editPizza", {

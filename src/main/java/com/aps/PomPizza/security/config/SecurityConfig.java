@@ -40,23 +40,20 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")  // Solo ADMIN puede acceder a /admin
-                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/api/pizzas").permitAll()
+                        .requestMatchers("/pizzas/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/pedidos/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/**", "/auth/users", "/auth/register", "/auth/login", "/auth/addNewUser", "/auth/generateToken")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(ex -> ex
-                        .accessDeniedPage("/error") // Página personalizada para errores de acceso denegado
-                )
-                .sessionManagement(sess -> sess
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -75,7 +72,6 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return userInfoService;
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

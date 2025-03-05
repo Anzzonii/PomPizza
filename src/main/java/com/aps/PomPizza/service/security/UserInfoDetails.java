@@ -17,10 +17,12 @@ public class UserInfoDetails implements UserDetails {
     private List<GrantedAuthority> authorities;
 
     public UserInfoDetails(Usuario userInfo) {
-        this.username = userInfo.getName(); // Suponiendo que 'name' es el nombre de usuario
+        this.username = userInfo.getName();
         this.password = userInfo.getPassword();
-        // Convertir el rol a GrantedAuthority
-        this.authorities = List.of(new SimpleGrantedAuthority(userInfo.getRol())); // Asumiendo que getRol() devuelve el rol como 'ROLE_USER' o 'ROLE_ADMIN'
+        this.authorities = List.of(userInfo.getRol().split(","))
+                .stream()
+                .map(rol -> new SimpleGrantedAuthority(rol.trim())) // Sin prefijo "ROLE_"
+                .collect(Collectors.toList());
     }
 
     @Override
