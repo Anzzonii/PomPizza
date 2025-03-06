@@ -2,31 +2,38 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista de Pedidos</title>
+    <link rel="stylesheet" href="/css/stylesPedidos.css"> <!-- Asegúrate de que este archivo esté en la ubicación correcta -->
 </head>
 <body>
+
+
+<form id="volverForm" th:action="@{/pizzas}" method="get">
+    <button type="submit" class="button">Volver</button>
+</form><br></br>
+<!-- Botón para crear un nuevo pedido -->
 <form id="crearForm" th:action="@{/pedidos/user/crearNuevoPedido}" method="get">
-    <button type="submit">Crear pedido</button>
+    <button type="submit" class="button">Crear nuevo pedido</button>
 </form>
 
-<h2 style="text-align: center;">Lista de pedidos</h2>
+<h2 style="text-align: center;">Lista de Pedidos</h2>
 
-<table border="2" >
+<!-- Tabla que contiene la lista de pedidos -->
+<table id="pedidoTable">
     <thead>
-    <tr>
-        <th>Nombre</th>
-        <th>Pizzas</th>
-        <th>Precio</th>
-        <th>Fecha</th>
-        <th>Estado</th>
-        <th id="thAcciones"></th>
-    </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Pizzas</th>
+            <th>Precio</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th id="thAcciones">Acciones</th>
+        </tr>
     </thead>
     <tbody id="pedido-table">
-    <!-- Aquí se insertan las pizzas dinámicamente -->
+        <!-- Aquí se insertan los pedidos dinámicamente -->
     </tbody>
 </table>
-
 
 <script th:src="@{/pedidos.js}"></script>
 

@@ -2,7 +2,7 @@
 
 
 async function cargarPizzas() {
-    const rol = obtenerRolUsuario()
+    const rol = obtenerRolUsuario();
     
     try {
         const response = await fetch('http://localhost:8080/api/pizzas'); // Llamada a la API
@@ -11,62 +11,44 @@ async function cargarPizzas() {
 
         const isAdmin = rol === "ROLE_ADMIN";
         
-        const tablaBody = document.getElementById('pizza-table');
+        const cardsContainer = document.getElementById('pizza-cards-container');
 
-        tablaBody.innerHTML = ''; // Limpiar la tabla antes de insertar los datos
+        cardsContainer.innerHTML = ''; // Limpiar el contenedor antes de insertar los datos
 
         pizzas.forEach(pizza => {
 
-            //Si el usuario es admin la muestra independientemente si esta disponible o no
-            if(isAdmin){
-                const fila = `<tr>
-                    <td>${pizza.nombre}</td>
-                    <td>${pizza.ingredientes}</td>
-                    <td>${pizza.precio.toFixed(2)}€</td>
-                    <td><image src="${pizza.imageUrl}" width="200"></td>
-
-                    ${isAdmin ? `
-                    <td>
-                        <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
-                        <button onClick="editarPizza('${pizza._id}')">Editar</button>
-                    </td>`
-                    : ""}
-                </tr>`;
-                    
-                tablaBody.innerHTML += fila;
-
-            }else{
-                //Si la pizza esta disponible y el usuario no es admin se muestra
-                if(pizza.disponible){
-                        const fila = `<tr>
-                        <td>${pizza.nombre}</td>
-                        <td>${pizza.ingredientes}</td>
-                        <td>${pizza.precio.toFixed(2)}€</td>
-                        <td><image src="${pizza.imageUrl}" width="200"></td>
-
+            // Si el usuario es admin, se muestra la pizza independientemente de su disponibilidad
+            if (isAdmin || pizza.disponible) {
+                const card = `
+                    <div class="pizza-card">
+                        <img src="${pizza.imageUrl}" alt="${pizza.nombre}" class="pizza-image">
+                        <div class="pizza-info">
+                            <h3>${pizza.nombre}</h3>
+                            <p><strong>Ingredientes:</strong> ${pizza.ingredientes}</p>
+                            <p><strong>Precio:</strong> ${pizza.precio.toFixed(2)}€</p>
+                        </div>
                         ${isAdmin ? `
-                        <td>
-                            <button onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
-                            <button onClick="editarPizza('${pizza._id}')">Editar</button>
-                        </td>`
-                        : ""}
-                    </tr>`;
-                        
-                    tablaBody.innerHTML += fila;
-                }
+                            <div class="pizza-actions">
+                                <button class="btn btn-danger" onClick="eliminarPizza('${pizza._id}')">Eliminar</button>
+                                <button class="btn btn-warning" onClick="editarPizza('${pizza._id}')">Editar</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
 
+                cardsContainer.innerHTML += card;
             }
         });
 
         if (!isAdmin) {
-            document.getElementById("thAcciones").style.display = "none";
-            document.getElementById("crearForm").style.display = "none";
+            document.getElementById("crearForm").style.display = "none"; // Ocultar el botón para crear pizzas si no es admin
         }
 
     } catch (error) {
         console.error('Error cargando las pizzas:', error);
     }
 }
+
 
 function eliminarPizza(id) {
     
@@ -103,7 +85,24 @@ function editarPizza(id) {
 }
 
 
-document.addEventListener('DOMContentLoaded', cargarPizzas);
+
+
+document.addEventListener('DOMContentLoaded', function (e) {
+    e.preventDefault()
+
+    cargarPizzas()
+
+    const cerrarSesion = document.getElementById("cerrarSessionButton")
+
+    cerrarSesion.addEventListener("click", function(e){
+        e.preventDefault()
+
+        localStorage.removeItem("token")
+        window.location.href="/auth/login"
+
+    })
+
+});
 
 
 function obtenerRolUsuario() {
@@ -126,8 +125,6 @@ function obtenerRolUsuario() {
         return rol;
     } catch (error) {
         console.error("Error obteniendo el rol:", error);
-        localStorage.removeItem("token"); // Limpiar el token inválido
-        window.location.href = "/auth/login";
         return null;
     }
 }

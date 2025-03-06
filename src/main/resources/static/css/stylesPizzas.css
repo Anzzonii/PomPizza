@@ -1,0 +1,118 @@
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  button {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+  }
+  
+  .pizza-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .pizza-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .pizza-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .pizza-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .pizza-info {
+    padding: 15px;
+  }
+  
+  .pizza-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .pizza-info p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .pizza-actions {
+    padding: 10px;
+    background-color: #f1f1f1;
+    text-align: center;
+  }
+  
+  .pizza-actions button {
+    margin: 5px;
+  }
+  
+  .pizza-actions .btn {
+    font-size: 0.9rem;
+  }
+  
+  form {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+.cerrarSesion {
+    background-color: #a31705;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    align-self: flex-start; /* Alinea el botón a la izquierda dentro del contenedor flex */
+}
+
+  

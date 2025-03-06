@@ -143,8 +143,6 @@ function obtenerRolUsuario() {
         return rol;
     } catch (error) {
         console.error("Error obteniendo el rol:", error);
-        localStorage.removeItem("token"); // Limpiar el token inválido
-        window.location.href = "/auth/login";
         return null;
     }
 }

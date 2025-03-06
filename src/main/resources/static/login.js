@@ -1,64 +1,74 @@
+
+
 document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-        loginForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
 
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value.trim();
+    const token = localStorage.getItem("token") && getCookie("token");
 
-            if (!username || !password) {
-                alert("Por favor, completa todos los campos.");
-                return;
-            }
+    if(token){
+        window.location.href = "/pizzas"
+    }else{
 
-            const authRequest = { username, password };
+        const loginForm = document.getElementById("loginForm");
+        if (loginForm) {
+            loginForm.addEventListener("submit", async function (event) {
+                event.preventDefault();
 
-            try {
-                const response = await fetch("http://localhost:8080/auth/generateToken", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(authRequest),
-                });
+                const username = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value.trim();
 
-                if (!response.ok) {
-                    throw new Error(`Error en el servidor: ${response.status} ${response.statusText}`);
+                if (!username || !password) {
+                    alert("Por favor, completa todos los campos.");
+                    return;
                 }
 
-                const tokens = await response.json();
-                const accessToken = tokens.accessToken;
-                const refreshToken = tokens.refreshToken;
+                const authRequest = { username, password };
 
-                if (accessToken && refreshToken) {
-                    // Guarda ambos tokens en localStorage y en cookies
-                    localStorage.setItem("token", accessToken);
-                    localStorage.setItem("refreshToken", refreshToken);
-                    setCookie("token", accessToken, 7);
-                    setCookie("refreshToken", refreshToken, 7);
+                try {
+                    const response = await fetch("http://localhost:8080/auth/generateToken", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(authRequest),
+                    });
 
-                    try {
-                        const payload = JSON.parse(atob(accessToken.split(".")[1]));
-                        const userRole = payload.role;
-                        console.log("Usuario autenticado con rol:", userRole);
-
-                        setCookie("userRole", userRole, 7);
-                        alert("Login exitoso!");
-                        window.location.href = "/pizzas";
-                    } catch (error) {
-                        console.error("Error al decodificar el token:", error);
-                        alert("Error en la autenticación.");
+                    if (!response.ok) {
+                        throw new Error(`Error en el servidor: ${response.status} ${response.statusText}`);
                     }
-                } else {
-                    alert("Usuario o contraseña incorrectos");
-                }
-            } catch (error) {
-                console.error("Error en el login:", error);
-                alert("Ocurrió un error durante el login. Por favor, intenta de nuevo.");
-            }
-        });
-    }
 
-    checkAuthStatus();
+                    const tokens = await response.json();
+                    const accessToken = tokens.accessToken;
+                    const refreshToken = tokens.refreshToken;
+
+                    if (accessToken && refreshToken) {
+                        // Guarda ambos tokens en localStorage y en cookies
+                        localStorage.setItem("token", accessToken);
+                        localStorage.setItem("refreshToken", refreshToken);
+                        setCookie("token", accessToken, 7);
+                        setCookie("refreshToken", refreshToken, 7);
+
+                        try {
+                            const payload = JSON.parse(atob(accessToken.split(".")[1]));
+                            const userRole = payload.role;
+                            console.log("Usuario autenticado con rol:", userRole);
+
+                            setCookie("userRole", userRole, 7);
+                            alert("Login exitoso!");
+                            window.location.href = "/pizzas";
+                        } catch (error) {
+                            console.error("Error al decodificar el token:", error);
+                            alert("Error en la autenticación.");
+                        }
+                    } else {
+                        alert("Usuario o contraseña incorrectos");
+                    }
+                } catch (error) {
+                    console.error("Error en el login:", error);
+                    alert("Ocurrió un error durante el login. Por favor, intenta de nuevo.");
+                }
+            });
+        }
+
+        checkAuthStatus();
+    }
 });
 
 function setCookie(name, value, days) {
@@ -99,10 +109,7 @@ function checkAuthStatus() {
 
     console.log("Rol del usuario:", userRole);
 
-    const adminPanel = document.getElementById("adminPanel");
-    if (adminPanel) {
-        adminPanel.style.display = userRole === "ADMIN" ? "block" : "none";
-    }
+
 }
 
 // Función para refrescar el access token cuando sea necesario

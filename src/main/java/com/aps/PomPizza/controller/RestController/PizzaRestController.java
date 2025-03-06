@@ -55,7 +55,6 @@ public class PizzaRestController {
     @GetMapping()
     public List<Pizza> allPizzas() {
         List<Pizza> pizzas = pizzaRepository.findAll();
-        pizzas.forEach(pedido -> System.out.println("Pedido encontrado: " + pedido.toString()));
         return pizzas;
     }
 }

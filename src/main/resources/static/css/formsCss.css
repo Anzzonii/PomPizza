@@ -1,0 +1,133 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h2, h3 {
+    font-size: 1.8rem;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Estilos para los formularios */
+form {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px; /* Aumentar el tamaño máximo del formulario */
+    margin: 20px 0;
+}
+
+/* Formulario de pedidos */
+#pedido-container {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px; /* Hacer más ancho el contenedor */
+}
+
+#pedido-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#pedido-list li {
+    margin: 5px 0;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between; /* Para separar los elementos */
+    align-items: center;
+}
+
+#pedido-list li button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px; /* Separar el botón de eliminar del precio */
+    transition: background-color 0.3s;
+}
+
+#pedido-list li button:hover {
+    background-color: #c0392b;
+}
+
+#pedido-list li span {
+    flex-grow: 1; /* Esto hace que el precio y el nombre de la pizza se alineen */
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f1f1f1;
+}
+
+table td img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+table td button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+table td button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para tablas en crear pedido */
+table th, table td {
+    font-size: 1rem;
+}
+
+table td img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}

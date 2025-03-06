@@ -1,38 +1,48 @@
-<!-- src/main/resources/templates/register.html -->
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro de Usuario</title>
+  <link rel="stylesheet" href="/css/stylesLogin.css">
 </head>
 <body>
-<h2>Formulario de Registro</h2>
-<form id="registerForm">
-  <label for="name">Nombre de usuario:</label><br>
-  <input type="text" id="name" name="name" required><br><br>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="text-center">Formulario de Registro</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Nombre de usuario:</label>
+          <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="rol">Rol:</label>
+          <select id="rol" name="rol" class="form-control">
+            <option value="ROLE_USER">Cliente</option>
+            <option value="ROLE_ADMIN">Admin</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Registrar</button>
+      </form>
 
-  <label for="password">Contraseña:</label><br>
-  <input type="password" id="password" name="password" required><br><br>
-
-  <label for="email">Correo electrónico:</label><br>
-  <input type="email" id="email" name="email" required><br><br>
-
-  <label for="rol">Rol:</label><br>
-  <select id="rol" name="rol">
-    <option value="ROLE_USER">Cliente</option>
-    <option value="ROLE_ADMIN">Admin</option>
-  </select><br><br>
-
-  <button type="submit">Registrar</button>
-</form>
-
-<form th:action="@{/auth/login}" method="get">
-  <button type="submit">Iniciar Sesion</button>
-</form>
+      <form th:action="@{/auth/login}" method="get">
+        <button type="submit" class="btn btn-link btn-block">Iniciar Sesion</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script th:src="@{/register.js}"></script>
-
 </body>
 </html>
+
 
